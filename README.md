@@ -5,7 +5,7 @@ This project is a simple static site generator.
 ## How to Run
 
 ```sh
-sh main.sh
+./main.sh
 ```
 
 ## Dependencies
