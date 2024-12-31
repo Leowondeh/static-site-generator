@@ -22,4 +22,4 @@ class TextNode:
         return text_equal and type_equal and url_equal
     
     def __repr__(self):
-        return f"TextNode({self.text}, {self.text_type.value}, {self.url})"
+        return f"HTMLNode({self.text}, {self.text_type.value}, {self.url})"

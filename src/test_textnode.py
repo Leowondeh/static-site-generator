@@ -44,8 +44,6 @@ class TestTextNode(unittest.TestCase):
 
         self.assertNotEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
 
-
-
 if __name__ == "__main__":
 
     unittest.main()
