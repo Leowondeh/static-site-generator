@@ -14,4 +14,4 @@ This project is a simple static site generator.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).

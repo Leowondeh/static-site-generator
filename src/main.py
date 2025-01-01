@@ -1,5 +1,3 @@
-from textnode import *
-
 def main():
     raise NotImplementedError
 
