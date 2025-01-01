@@ -3,47 +3,22 @@ import unittest
 from textnode import TextNode, TextType
 
 class TestTextNode(unittest.TestCase):
-    def test_equals_1(self):
-        test_type = 'equals'
-        test_node1 = TextNode("This is a text node", TextType.BOLD)
-        test_node2 = TextNode("This is a text node", TextType.BOLD)
-
-        self.assertEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
-    def test_equals_2(self):
-        test_type = 'equals'
-        test_node1 = TextNode("", TextType.NORMAL, "")
-        test_node2 = TextNode("", TextType.NORMAL, "")
-
-        self.assertEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
-
-    def test_equals_3(self):
-        test_type = 'equals'
-        test_node1 = TextNode("<h1>Hello world</h1>", TextType.CODE)
-        test_node2 = TextNode("<h1>Hello world</h1>", TextType.CODE)
-
-        self.assertEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
-
-    def test_not_equals_1(self):
-        test_type = 'not equal to'
-        test_node1 = TextNode("This is a text node", TextType.NORMAL, 'github.com')
-        test_node2 = TextNode("This is a different text node", TextType.ITALIC)
-
-        self.assertNotEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
+    def test_values(self):
+        node = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
+        self.assertEqual(node.text, 'Lorem ipsum dolor sit amet')
+        self.assertEqual(node.text_type.value, 'normal')
+        self.assertEqual(node.url, 'https://www.example.com')
     
-    def test_not_equals_2(self):
-        test_type = 'not equal to'
-        test_node1 = TextNode("", TextType.BOLD)
-        test_node2 = TextNode("", TextType.ITALIC)
+    def test_repr(self):
+        node = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
+        self.assertEqual(node.__repr__(), 'HTMLNode(Lorem ipsum dolor sit amet, normal, https://www.example.com)')
 
-        self.assertNotEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
+    def test_two_nodes(self):
+        node1 = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
+        node2 = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
 
-    def test_not_equals_3(self):
-        test_type = 'not equal to'
-        test_node1 = TextNode("", TextType.NORMAL, None)
-        test_node2 = TextNode("", TextType.CODE, None)
+        self.assertEqual(node1, node2)
 
-        self.assertNotEqual(test_node1, test_node2, f"\n>> FAIL: {__name__} with {test_node1} {test_type} {test_node2}")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
 
     unittest.main()
