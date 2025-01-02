@@ -11,7 +11,7 @@ class TestTextNode(unittest.TestCase):
     
     def test_repr(self):
         node = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
-        self.assertEqual(node.__repr__(), 'HTMLNode(Lorem ipsum dolor sit amet, normal, https://www.example.com)')
+        self.assertEqual(node.__repr__(), 'TextNode(Lorem ipsum dolor sit amet, normal, https://www.example.com)')
 
     def test_two_nodes(self):
         node1 = TextNode('Lorem ipsum dolor sit amet', TextType.NORMAL, 'https://www.example.com')
