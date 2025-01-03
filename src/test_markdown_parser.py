@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from markdown_parser import split_nodes_with_delimiter
+from markdown_parser import split_nodes_with_delimiter, regex_markdown_images, regex_markdown_links
 
 class TestSplitNodesWithDelimiter(unittest.TestCase):
     def test_delimiter_bold(self):
@@ -84,4 +84,52 @@ class TestSplitNodesWithDelimiter(unittest.TestCase):
                 TextNode('italic', TextType.ITALIC, None)
             ],
             result_finished
+        )
+
+class TestRegexMarkdownImages(unittest.TestCase):
+    def test_text_image(self):
+        text = 'This is text with a ![linked image](https://i.imgur.com/aKaOqIh.gif).'
+        result = regex_markdown_images(text)
+
+        self.assertListEqual(
+            [
+                ('linked image', 'https://i.imgur.com/aKaOqIh.gif')
+            ],
+            result
+        )
+    
+    def test_text_multiple_images(self):
+        text = 'This is text with a ![linked image](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)'
+        result = regex_markdown_images(text)
+
+        self.assertListEqual(
+            [
+                ('linked image', 'https://i.imgur.com/aKaOqIh.gif'),
+                ('obi wan', 'https://i.imgur.com/fJRm4Vk.jpeg')
+            ],
+            result
+        )
+
+class TestRegexMarkdownLinks(unittest.TestCase):
+    def test_text_link(self):
+        text = 'This is text with a [link to example](https://www.example.com).'
+        result = regex_markdown_links(text)
+
+        self.assertListEqual(
+            [
+                ('link to example', 'https://www.example.com')
+            ],
+            result
+        )
+    
+    def test_text_multiple_links(self):
+        text = 'This is text with a [link to example](https://www.example.com) and a [link to github](https://www.github.com)'
+        result = regex_markdown_links(text)
+        
+        self.assertListEqual(
+            [
+                ('link to example', 'https://www.example.com'),
+                ('link to github', 'https://www.github.com')
+            ],
+            result
         )

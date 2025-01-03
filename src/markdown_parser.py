@@ -1,6 +1,7 @@
 from textnode import TextType, TextNode
+import re
 
-def split_nodes_with_delimiter(nodes: list[TextNode], delimiter: str, type: TextType):
+def split_nodes_with_delimiter(nodes: list[TextNode], delimiter: str, type: TextType) -> list:
     split_nodes = []
 
     for node in nodes:
@@ -24,3 +25,16 @@ def split_nodes_with_delimiter(nodes: list[TextNode], delimiter: str, type: Text
                 split_nodes.append(TextNode(split_node_text[i], TextType.NORMAL, node.url))
     
     return split_nodes
+
+def regex_markdown_images(text: str) -> list[tuple]:
+    pattern = r'!\[([^\[\]]*)\]\(([^\(\)]*)\)'
+    matches = re.findall(pattern, text)
+    
+    return matches
+
+def regex_markdown_links(text: str) -> list[tuple]:
+    pattern = r'(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)'
+    #          ~~~~~~ = negative lookbehind: expression cannot start with "!" (because it would be an image)
+    matches = re.findall(pattern, text)
+    
+    return matches
