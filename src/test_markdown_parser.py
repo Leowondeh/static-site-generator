@@ -1,6 +1,10 @@
 import unittest
 from textnode import TextNode, TextType
-from markdown_parser import split_nodes_with_delimiter, regex_markdown_images, regex_markdown_links
+from markdown_parser import (split_nodes_with_delimiter,
+                             regex_markdown_images,
+                             regex_markdown_links,
+                             split_nodes_with_image,
+                             split_nodes_with_link)
 
 class TestSplitNodesWithDelimiter(unittest.TestCase):
     def test_delimiter_bold(self):
@@ -84,6 +88,72 @@ class TestSplitNodesWithDelimiter(unittest.TestCase):
                 TextNode('italic', TextType.ITALIC, None)
             ],
             result_finished
+        )
+
+class TestSplitNodesWithImage(unittest.TestCase):
+    def test_only_image(self):
+        node = TextNode('![image link](https://www.example.com)', TextType.NORMAL)
+        
+        self.assertEqual(
+            [
+                TextNode('image link', TextType.IMAGE, 'https://www.example.com')
+            ],
+            split_nodes_with_image([node])
+        )
+    
+    def test_single_image(self):
+        node = TextNode('text with a ![image link](https://www.example.com)', TextType.NORMAL)
+        
+        self.assertEqual(
+            [
+                TextNode('text with a ', TextType.NORMAL, None),
+                TextNode('image link', TextType.IMAGE, 'https://www.example.com')
+            ],
+            split_nodes_with_image([node])
+        )
+    
+    def test_single_image_and_text_after(self):
+        node = TextNode('text with a ![image link](https://www.example.com) and some text after', TextType.NORMAL)
+        self.assertEqual(
+            [
+                TextNode('text with a ', TextType.NORMAL, None),
+                TextNode('image link', TextType.IMAGE, 'https://www.example.com'),
+                TextNode(' and some text after', TextType.NORMAL, None)
+            ],
+            split_nodes_with_image([node])
+        )
+
+class TestSplitNodesWithLink(unittest.TestCase):
+    def test_only_link(self):
+        node = TextNode('[link](https://www.example.com)', TextType.NORMAL)
+        
+        self.assertEqual(
+            [
+                TextNode('link', TextType.LINK, 'https://www.example.com')
+            ],
+            split_nodes_with_link([node])
+        )
+
+    def test_single_link(self):
+        node = TextNode('text with a [link](https://www.example.com)', TextType.NORMAL)
+        
+        self.assertEqual(
+            [
+                TextNode('text with a ', TextType.NORMAL, None),
+                TextNode('link', TextType.LINK, 'https://www.example.com')
+            ],
+            split_nodes_with_link([node])
+        )
+    
+    def test_single_link_and_text_after(self):
+        node = TextNode('text with a [link](https://www.example.com) and some text after', TextType.NORMAL)
+        self.assertEqual(
+            [
+                TextNode('text with a ', TextType.NORMAL, None),
+                TextNode('link', TextType.LINK, 'https://www.example.com'),
+                TextNode(' and some text after', TextType.NORMAL, None)
+            ],
+            split_nodes_with_link([node])
         )
 
 class TestRegexMarkdownImages(unittest.TestCase):
