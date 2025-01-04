@@ -1,10 +1,13 @@
 import unittest
 from textnode import TextNode, TextType
-from markdown_parser import (split_nodes_with_delimiter,
-                             regex_markdown_images,
-                             regex_markdown_links,
-                             split_nodes_with_image,
-                             split_nodes_with_link)
+from markdown_parser import (
+                                split_nodes_with_delimiter,
+                                regex_markdown_images,
+                                regex_markdown_links,
+                                split_nodes_with_image,
+                                split_nodes_with_link,
+                                text_to_text_nodes
+                            )
 
 class TestSplitNodesWithDelimiter(unittest.TestCase):
     def test_delimiter_bold(self):
@@ -34,8 +37,8 @@ class TestSplitNodesWithDelimiter(unittest.TestCase):
         )
     
     def test_delimiter_code(self):
-        node = TextNode("example text with 'code' text", TextType.NORMAL)
-        result = split_nodes_with_delimiter([node], "'", TextType.CODE)
+        node = TextNode("example text with `code` text", TextType.NORMAL)
+        result = split_nodes_with_delimiter([node], "`", TextType.CODE)
 
         self.assertListEqual(
             [
@@ -203,3 +206,25 @@ class TestRegexMarkdownLinks(unittest.TestCase):
             ],
             result
         )
+
+class TestTextToTextNodes(unittest.TestCase):
+    def test(self):
+        text = 'This is **bold text** with an *italic* word, a `code block`, an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://example.com)'
+
+        self.assertEqual(
+            [
+                TextNode("This is ", TextType.NORMAL),
+                TextNode("bold text", TextType.BOLD),
+                TextNode(" with an ", TextType.NORMAL),
+                TextNode("italic", TextType.ITALIC),
+                TextNode(" word, a ", TextType.NORMAL),
+                TextNode("code block", TextType.CODE),
+                TextNode(", an ", TextType.NORMAL),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and a ", TextType.NORMAL),
+                TextNode("link", TextType.LINK, "https://example.com"),
+            ],
+            text_to_text_nodes(text)
+        )
+
+    

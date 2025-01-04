@@ -1,6 +1,17 @@
 from textnode import TextType, TextNode
 import re
 
+
+def text_to_text_nodes(text: str) -> list:
+    out_text = [TextNode(text, TextType.NORMAL)]
+    out_text = split_nodes_with_delimiter(out_text, '**', TextType.BOLD)
+    out_text = split_nodes_with_delimiter(out_text, '*', TextType.ITALIC)
+    out_text = split_nodes_with_delimiter(out_text, '`', TextType.CODE)
+    out_text = split_nodes_with_image(out_text)
+    out_text = split_nodes_with_link(out_text)
+
+    return out_text
+
 def split_nodes_with_delimiter(nodes: list[TextNode], delimiter: str, type: TextType) -> list:
     split_nodes = []
 
@@ -39,7 +50,7 @@ def split_nodes_with_image(nodes: list[TextNode]) -> list:
         if len(image_matches) == 0:
             split_nodes.append(node)
             continue
-        
+
         start_len = 0
         for match in image_matches:
             # find the index of all the text before the match
