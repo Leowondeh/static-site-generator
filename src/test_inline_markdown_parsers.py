@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from markdown_parser import (
+from inline_markdown_parsers import (
                                 split_nodes_with_delimiter,
                                 regex_markdown_images,
                                 regex_markdown_links,
@@ -227,4 +227,5 @@ class TestTextToTextNodes(unittest.TestCase):
             text_to_text_nodes(text)
         )
 
-    
+if __name__ == '__main__':
+    unittest.main()

@@ -1,6 +1,6 @@
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode, ParentNode, LeafNode
-from markdown_parser import split_nodes_with_delimiter, split_nodes_with_image
+from inline_markdown_parsers import split_nodes_with_delimiter, split_nodes_with_image
 
 def main():
     raise NotImplementedError

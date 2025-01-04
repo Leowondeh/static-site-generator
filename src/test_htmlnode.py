@@ -64,5 +64,6 @@ class TestHTMLNode(unittest.TestCase):
                               LeafNode('b', 'example bold text')
                           ])
         self.assertEqual(node.to_html(), '<p><p><b>example bold text</b><i>example italic text</i></p>example normal text<p>example normal text<b>another example bold text</b></p><b>example bold text</b></p>')
+
 if __name__ == '__main__':
     unittest.main()

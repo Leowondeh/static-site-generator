@@ -1,7 +1,6 @@
 from textnode import TextType, TextNode
 import re
 
-
 def text_to_text_nodes(text: str) -> list:
     out_text = [TextNode(text, TextType.NORMAL)]
     out_text = split_nodes_with_delimiter(out_text, '**', TextType.BOLD)
