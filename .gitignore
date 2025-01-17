@@ -1,3 +1,5 @@
 __pycache__/
 static/
 public/
+content/
+template.html

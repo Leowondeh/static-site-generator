@@ -11,6 +11,18 @@ def text_to_text_nodes(text: str) -> list:
 
     return out_text
 
+def extract_title(markdown: str) -> str:
+    # split at newlines
+    split_markdown = markdown.split('\n')
+
+    for line in split_markdown:
+        if line == '':
+            continue
+        if line.split()[0] == '#':
+            return line[2:].strip()
+    
+    raise Exception('File does not contain a header! we need at least one so the page can have a title.')
+
 def split_nodes_with_delimiter(nodes: list[TextNode], delimiter: str, type: TextType) -> list:
     split_nodes = []
 

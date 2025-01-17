@@ -1,6 +1,6 @@
 # Static Site Generator
 
-This project is a simple static site generator.
+This project is a simple static site generator. 
 
 ## How to Run
 

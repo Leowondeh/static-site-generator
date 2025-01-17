@@ -6,7 +6,8 @@ from inline_markdown_parsers import (
                                 regex_markdown_links,
                                 split_nodes_with_image,
                                 split_nodes_with_link,
-                                text_to_text_nodes
+                                text_to_text_nodes,
+                                extract_title
                             )
 
 class TestSplitNodesWithDelimiter(unittest.TestCase):
@@ -227,5 +228,32 @@ class TestTextToTextNodes(unittest.TestCase):
             text_to_text_nodes(text)
         )
 
+class TestExtractTitle(unittest.TestCase):
+    def test_simple_header(self):
+        text = '# Lorem ipsum'
+
+        self.assertEqual('Lorem ipsum', extract_title(text))
+
+    def test_multiline(self):
+        text = """
+## title
+# h1 header
+### smaller title
+
+some text
+"""
+        
+        self.assertEqual('h1 header', extract_title(text))
+
+    def test_no_h1(self):
+        text = """
+## small texty
+### smaller text
+
+more text **bold**
+"""
+
+        with self.assertRaises(Exception) as ex:
+            self.assertEqual(ex.exception, 'File does not contain a header! we need at least one so the page can have a title.')
 if __name__ == '__main__':
     unittest.main()
