@@ -126,7 +126,7 @@ def code_to_html_node(block):
     # take the text between the code block
     text = block[4:-3]
 
-    return ParentNode('pre', ParentNode('code', text_to_children(text)))
+    return ParentNode('pre', [ParentNode('code', text_to_children(text))])
 
 
 def olist_to_html_node(block):
