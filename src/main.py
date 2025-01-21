@@ -10,8 +10,8 @@ os_type = platform.system()
 # paths are relative to executor (main.sh in this case)
 static_path = 'static'
 public_path = 'public'
-
 content_path = 'content'
+
 template_path = 'template.html'
 
 def main():
@@ -19,10 +19,15 @@ def main():
 
     # Check static/public path existence
     if not os.path.exists(static_path):
+        logging.info('Static path does not exist! Move your stylesheet (.css) and image files into the static folder and re-run the program')
         os.mkdir(static_path)
-        logging.info('Static path does not exist! Move your .md and image files into the static folder and re-run the program')
         full_shutdown()
 
+    if not os.path.exists(content_path):
+        logging.info("Content path does not exist! Move your markdown (.md) files into the static folder and re-run the program")
+        os.mkdir(public_path)
+        full_shutdown()
+    
     if not os.path.exists(public_path):
         logging.info("Creating public path, since it doesn't exist")
         os.mkdir(public_path)
