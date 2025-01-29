@@ -25,7 +25,7 @@ def main():
 
     if not os.path.exists(content_path):
         logging.info("Content path does not exist! Move your markdown (.md) files into the static folder and re-run the program")
-        os.mkdir(public_path)
+        os.mkdir(content_path)
         full_shutdown()
     
     if not os.path.exists(public_path):
