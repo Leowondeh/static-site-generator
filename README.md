@@ -1,6 +1,6 @@
-# Static Site Generator
+# statti, a static site generator
 
-This is a static site generator. It's objective is to **convert** markdown (.md) files to **HTML pages** which can be serviced on the web easier, using a template stylesheet and HTML page.
+This program **converts** markdown (.md) files to **HTML pages** which can be serviced on the web easier, using a template stylesheet and HTML page.
 
 ## Getting started
 
